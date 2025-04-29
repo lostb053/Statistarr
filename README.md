@@ -13,7 +13,10 @@ It's a stupid script mostly created by gpt. Basically calls v3/history API, filt
 Requirements:
 * python3 (i used 3.13.3 - was working for me)
 * pip
-* Install requirements from requirements.txt
+* Install requirements
+```
+pip install requests quickchart.io
+```
 
 
 I am still figuring out exe file and how to schedule a py or exe file (I am a windows user). I will upload mainly the py files in question and let other users (if this repo even attracts attention) deal with how to schedule it. 
@@ -37,6 +40,9 @@ cchart.py output
 
 ![sf-a6c85628-6cb1-4ceb-b434-20cf053ef10e](https://github.com/user-attachments/assets/a7824839-d075-46d2-beeb-77f8687d7a37)
 
+## Credits
+* ChatGPT
+* @typpo for [quickchart-python](https://github.com/typpo/quickchart-python)
 
 ## The code is bad?
 Thank you. I am not a programmer, just a random biology guy
