@@ -156,6 +156,3 @@ for indexer, counts in sorted(combined_stats.items(), key=lambda x: (-x[1]['fail
 end_time = time.time()    # Record end time
 elapsed_time = end_time - start_time
 print(f"\nTime taken: {elapsed_time:.2f} seconds")
-
-
-input("\nPress Enter to exit...")

@@ -1,0 +1,8 @@
+{
+	"Statistarr": [
+		{"name": "Sonarr1", "url": "http://localhost:8989", "api_key": "..."},
+		{"name": "Sonarr2", "url": "http://localhost:9990", "api_key": "..."},
+    	{"name": "Radarr1", "url": "http://localhost:7878", "api_key": "..."}
+	],
+    "Quickchart": {}
+}

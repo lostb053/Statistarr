@@ -7,11 +7,20 @@ qc.width = 1000
 qc.height = 600
 qc.version = '2'
 
+with open("config.json", "r") as config_file:
+    config = json.load(config_file)
+config_dict = config["Quickchart"]
+
+for key, value in config_dict.items():
+    setattr(qc, key, value)
+
 # Your raw JSON data
-if any(f.endswith(".json") for f in os.listdir()):
-    matches = [f for f in os.listdir() if f.endswith(".json")]
+if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
+    matches = [f for f in os.listdir() if (f.endswith(".json") and f.startswith("Stats "))]
     with open(matches[0], "r") as file:
         raw_data = json.load(file)
+else:
+    raise Exception("No JSON dump found. Run statistarr script first")
 
 # 1. Combine totals per indexer
 totals = {}
@@ -87,5 +96,6 @@ qc.config = f"""{{
 }}"""
 
 print("Shareable Chart URL:", qc.get_short_url())
+
 
 input("\nPress Enter to exit...")
