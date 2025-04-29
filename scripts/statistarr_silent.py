@@ -62,7 +62,7 @@ def parse_logs(app_name, logs):
     raw_stats = {}
     date_.append(logs[0]['date'])
     for log in logs:
-        if last_date == log['date']:
+        if (last_date == log['date']) or (max(last_date, log['date']) == last_date):
             break
         if log.get('downloadId') not in raw_stats.keys():
             raw_stats[log.get('downloadId')] = {}
