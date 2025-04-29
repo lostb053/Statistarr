@@ -16,7 +16,7 @@ Statistarr solves that by:
 - Saving it to a persistent `JSON` file  
 
 > [!Note]
-> Stats will likely be inaccurate at first since they start collecting from the day you begin using it. But let it run for a while, and you'll get a clearer picture of how well each indexer performs.
+> Stats may be inaccurate at first, not because the script starts fresh, but because Radarr and Sonarr delete history data for any shows or movies you’ve removed. Once something is gone, so is its history — meaning the script has nothing to track for it. Let the script run continuously from now on, and over time you'll build a more complete picture of how each indexer performs.
 
 ---
 
