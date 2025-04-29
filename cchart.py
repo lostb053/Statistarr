@@ -87,3 +87,5 @@ qc.config = f"""{{
 }}"""
 
 print("Shareable Chart URL:", qc.get_short_url())
+
+input("\nPress Enter to exit...")
