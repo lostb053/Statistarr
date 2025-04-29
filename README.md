@@ -2,6 +2,8 @@
 
 A simple Python script to track **failed** and **successful** grabs per indexer. Currently works with **Sonarr** and **Radarr** only.
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ---
 
 ### 🧐 Why?
@@ -115,4 +117,3 @@ You're probably right.
 I’m just a biotech student fiddling around—this isn’t meant to be elegant or production-grade. But hey, if it helps you track bad indexers, mission accomplished.
 
 Feel free to open issues, submit PRs, or fork and improve!
-
