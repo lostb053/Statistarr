@@ -22,3 +22,21 @@ The py scripts (mostly built with windows in mind, open issue if any error) are 
 * statistarr.py - when run in console, prints a nice output in terminal. Main function being though json dump.
 * cchart.py - uses quickchart.io to display the stats in a pretty graph/chart
 
+### Screenshots
+
+statistarr.py print output (sorry for the sloppy attempt at hiding indexers 😭)
+
+![Screenshot 2025-04-29 055201](https://github.com/user-attachments/assets/20787e55-4e36-4f30-9b6e-9a2707eee41c)
+![Screenshot 2025-04-29 055217](https://github.com/user-attachments/assets/add7f0a2-8306-46a9-ab87-429042c48144)
+
+
+>[!NOTE]
+>Failure rate is calculated by failed grabs / total grabs (success+fail)
+
+cchart.py output
+
+![sf-a6c85628-6cb1-4ceb-b434-20cf053ef10e](https://github.com/user-attachments/assets/a7824839-d075-46d2-beeb-77f8687d7a37)
+
+
+## The code is bad?
+Thank you. I am not a programmer, just a random biology guy
