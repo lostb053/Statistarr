@@ -36,9 +36,10 @@ It:
 
 ---
 
-## 🚀 Getting Started
+### 🧰 Setup Methods
 
-### Requirements
+#### Method 1 – From Source
+ Requirements
 - Python 3 (tested on `3.13.3`)
 - `pip`
 - Install dependencies:
@@ -50,11 +51,7 @@ pip install requests quickchart.io pyinstaller
 > [!Tip]
 > Keep all script files in one separate directory for smoother execution.
 
----
-
-### 🧰 Setup Methods
-
-#### Method 1 – From Source
+Moving ahead:
 1. Download all `.py` files.
 2. Download `config.json.example` and rename it to `config.json`.
 3. Fill in your API details inside `config.json`.
