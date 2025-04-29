@@ -22,7 +22,7 @@ APPS = config["Statistarr"]
 # --- Functions ---
 last_date = ""
 old_stats = {}
-if any(f.endswith(".json") for f in os.listdir()):
+if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
     matches = [f for f in os.listdir() if (f.endswith(".json") and f.startswith("Stats "))]
     last_date = re.sub(r"Stats (.*)\.json", r"\1", matches[0]).replace("_",":")
     with open(matches[0], "r") as file:
