@@ -64,7 +64,7 @@ pyinstaller --onefile statistarr_silent.py
 ```
 
 #### Method 2 – Executables (Windows Only)
-1. Download the pre-built `.exe` files from the [Releases](#) page.
+1. Download the pre-built `.exe` files from the [Releases](https://github.com/lostb053/Statistarr/releases) page.
 2. Download `config.json.example` and rename it to `config.json`.
 3. Fill in your API details.
 
