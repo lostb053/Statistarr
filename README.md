@@ -1,48 +1,118 @@
 # Statistarr
-Just a simple python script to keep track of failed and successful grabs per indexer basis. Works only with sonarr and radarr.
 
-### Why?
-Prowlarr doesn't track failed grabs. Additionally it creates a json dump of stats, as stats related to deleted Movies/Shows from Radarr/Sonarr go poof as well. 
->[!NOTE]
->Which is to say, initially collected stats will most likely inaccurate. But use it long enough and you get a better idea of how each indexer in your stack fares for movies and tv shows
+A simple Python script to track **failed** and **successful** grabs per indexer. Currently works with **Sonarr** and **Radarr** only.
 
-### How does it work?
-It's a stupid script mostly created by gpt. Basically calls v3/history API, filters thru events, notes latest event date, dumps a json with collected stats (picks up json dumps as well, so older stats remain untouched). First completion may take a while depending on history size. I can't vouch for bugs and errors tbh, feel free to open issue. 
+---
 
-### How to use?
-Requirements:
-* python3 (i used 3.13.3 - was working for me)
-* pip
-* Install requirements
+### 🧐 Why?
+
+Prowlarr doesn’t track failed grabs, and when you remove movies or shows from Radarr/Sonarr, their associated stats vanish too.  
+Statistarr solves that by:
+
+- Fetching your history via the API  
+- Logging grab stats per indexer  
+- Saving it to a persistent `JSON` file  
+
+> [!Note]
+> Stats will likely be inaccurate at first since they start collecting from the day you begin using it. But let it run for a while, and you'll get a clearer picture of how well each indexer performs.
+
+---
+
+### ⚙️ How does it work?
+
+Honestly? It’s a messy little script mostly written by ChatGPT.  
+It:
+
+1. Calls the `v3/history` API
+2. Filters and processes events
+3. Notes the latest event date
+4. Saves stats in a `JSON` file  
+5. Merges new stats with older ones (so historical data isn’t lost)
+
+> **First-time run might take a while** depending on how big your history is.  
+> It's not perfect—bugs may exist. Feel free to open an issue if something breaks.
+
+---
+
+## 🚀 Getting Started
+
+### Requirements
+- Python 3 (tested on `3.13.3`)
+- `pip`
+- Install dependencies:
+
 ```
 pip install requests quickchart.io pyinstaller
 ```
 
+> [!Tip]
+> Keep all script files in the same directory for smoother execution.
 
-I am still figuring out exe file and how to schedule a py or exe file (I am a windows user). I will upload mainly the py files in question and let other users (if this repo even attracts attention) deal with how to schedule it. A good way would be using pyinstaller and setting up scheduler/cron job.
+---
 
-The py scripts (mostly built with windows in mind, open issue if any error) are as follows
-* statistarr.py - when run in console, prints a nice output in terminal. Main function being though json dump.
-* cchart.py - uses quickchart.io to display the stats in a pretty graph/chart
+### 🧰 Setup Methods
 
-### Screenshots
+#### Method 1 – From Source
+1. Download all `.py` files.
+2. Download `config.json.example` and rename it to `config.json`.
+3. Fill in your API details inside `config.json`.
+4. Build executables using `pyinstaller`:
 
-statistarr.py print output (sorry for the sloppy attempt at hiding indexers 😭)
+```bash
+pyinstaller --onefile cchart.py
+pyinstaller --onefile statistarr.py
+pyinstaller --onefile statistarr_silent.py
+```
 
-![Screenshot 2025-04-29 055201](https://github.com/user-attachments/assets/20787e55-4e36-4f30-9b6e-9a2707eee41c)
-![Screenshot 2025-04-29 055217](https://github.com/user-attachments/assets/add7f0a2-8306-46a9-ab87-429042c48144)
+#### Method 2 – Executables (Windows Only)
+1. Download the pre-built `.exe` files from the [Releases](#) page.
+2. Download `config.json.example` and rename it to `config.json`.
+3. Fill in your API details.
 
+---
 
->[!NOTE]
->Failure rate is calculated by failed grabs / total grabs (success+fail)
+## 🛠 Script Overview
 
-cchart.py output
+- `statistarr.py` – Prints readable output to the terminal. Also creates or updates the `JSON` stats dump.
+- `statistarr_silent.py` – Same functionality as above, but runs quietly in the background (when used as an app).
+- `cchart.py` – Uses [QuickChart.io](https://quickchart.io/) to display your collected stats in a simple graph or chart.
 
-![sf-a6c85628-6cb1-4ceb-b434-20cf053ef10e](https://github.com/user-attachments/assets/a7824839-d075-46d2-beeb-77f8687d7a37)
+> [!Important]
+> PyInstaller executables may trigger false positives in antivirus tools or VirusTotal. This is a known issue and not unique to this project.
 
-## Credits
-* ChatGPT
-* @typpo for [quickchart-python](https://github.com/typpo/quickchart-python)
+---
 
-## The code is bad?
-Thank you. I am not a programmer, just a random biology guy
+## 📸 Screenshots
+
+### `statistarr.py` Terminal Output
+
+_(Indexers have been blurred to protect the innocent 😭)_
+
+![Screenshot](https://github.com/user-attachments/assets/20787e55-4e36-4f30-9b6e-9a2707eee41c)  
+![Screenshot](https://github.com/user-attachments/assets/add7f0a2-8306-46a9-ab87-429042c48144)
+
+> [!note]
+> **Failure Rate = Failed Grabs ÷ (Successful Grabs + Failed Grabs)**
+
+---
+
+### `cchart.py` Graph Output
+
+![Chart](https://github.com/user-attachments/assets/a7824839-d075-46d2-beeb-77f8687d7a37)
+
+---
+
+## 🙏 Credits
+
+- **ChatGPT** – For assembling most of this script
+- **[@typpo](https://github.com/typpo)** – For the excellent [quickchart-python](https://github.com/typpo/quickchart-python) library
+
+---
+
+## 🤷 The Code is Bad?
+
+You're probably right.  
+I’m just a biotech student fiddling around—this isn’t meant to be elegant or production-grade. But hey, if it helps you track bad indexers, mission accomplished.
+
+Feel free to open issues, submit PRs, or fork and improve!
+
