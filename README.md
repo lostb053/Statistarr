@@ -48,7 +48,7 @@ pip install requests quickchart.io pyinstaller
 ```
 
 > [!Tip]
-> Keep all script files in the same directory for smoother execution.
+> Keep all script files in one separate directory for smoother execution.
 
 ---
 
