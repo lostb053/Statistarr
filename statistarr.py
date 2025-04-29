@@ -28,19 +28,23 @@ if any(f.endswith(".json") for f in os.listdir()):
 def fetch_all_logs(app):
     page = 1
     all_logs = []
-    while True:
-        r = requests.get(f"{app['url']}/api/v3/history?page={page}&pageSize=1000&eventType=4&eventType=1&sortKey=date&sortDirection=descending", headers={"X-Api-Key": app['api_key']})
-        if r.status_code != 200:
-            print(f"Failed to fetch logs from {app['name']}: {r.status_code}")
-            break
-        page_logs = r.json().get('records')
-        if not page_logs or page_logs == []:
-            break
-        if not max(last_date, page_logs[0]['date']) == page_logs[0]['date']:
-            break
-        all_logs.extend(page_logs)
-        page += 1
-    return all_logs
+    try:
+        while True:
+            r = requests.get(f"{app['url']}/api/v3/history?page={page}&pageSize=1000&eventType=4&eventType=1&sortKey=date&sortDirection=descending", headers={"X-Api-Key": app['api_key']})
+            if r.status_code != 200:
+                print(f"Failed to fetch logs from {app['name']}: {r.status_code}")
+                break
+            page_logs = r.json().get('records')
+            if not page_logs or page_logs == []:
+                break
+            if not max(last_date, page_logs[0]['date']) == page_logs[0]['date']:
+                break
+            all_logs.extend(page_logs)
+            page += 1
+        return all_logs
+    except:
+        print(f"Can't connect to {app['name']}")
+        return []
 
 date_ = []
 
@@ -152,3 +156,6 @@ for indexer, counts in sorted(combined_stats.items(), key=lambda x: (-x[1]['fail
 end_time = time.time()    # Record end time
 elapsed_time = end_time - start_time
 print(f"\nTime taken: {elapsed_time:.2f} seconds")
+
+
+input("\nPress Enter to exit...")
