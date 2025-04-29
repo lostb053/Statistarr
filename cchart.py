@@ -1,0 +1,89 @@
+import os
+import json
+from quickchart import QuickChart
+
+qc = QuickChart()
+qc.width = 1000
+qc.height = 600
+qc.version = '2'
+
+# Your raw JSON data
+if any(f.endswith(".json") for f in os.listdir()):
+    matches = [f for f in os.listdir() if f.endswith(".json")]
+    with open(matches[0], "r") as file:
+        raw_data = json.load(file)
+
+# 1. Combine totals per indexer
+totals = {}
+for app, indexers in raw_data.items():
+    for indexer, stats in indexers.items():
+        short_name = indexer.split(" (")[0]  # Remove (Prowlarr)
+        if short_name not in totals:
+            totals[short_name] = {"success": 0, "fail": 0}
+        totals[short_name]["success"] += stats.get("success", 0)
+        totals[short_name]["fail"] += stats.get("fail", 0)
+
+# 2. Prepare labels and data arrays
+sorted_totals = sorted(totals.items(), key=lambda x: x[1]["success"], reverse=True)
+labels = []
+success_data = []
+fail_data = []
+failure_rates = []  # for datalabels plugin
+
+for indexer, stats in sorted_totals:
+    labels.append(indexer)
+    success_data.append(stats["success"])
+    fail_data.append(stats["fail"])
+    total = stats["success"] + stats["fail"]
+    if total > 0:
+        failure_rates.append(str(round(stats["fail"]/total*100, 1))+"%")
+    else:
+        failure_rates.append("0.0%")
+failure_rates_json = json.dumps(failure_rates)
+
+# 3. Build chart config
+qc.config = f"""{{
+    "type": "bar",
+    "data": {{
+        "labels": {labels},
+        "datasets": [
+            {{
+                "label": "Success",
+                "data": {success_data},
+                "backgroundColor": "#baed6d",
+                "datalabels": {{
+                    "display": false
+                }}
+            }},
+            {{
+                "label": "Fail",
+                "data": {fail_data},
+                "backgroundColor": "#ed6d80",
+                "failureRateData": {failure_rates_json},
+                "datalabels": {{
+                    "display": true,
+                    "align": "end",
+                    "anchor": "end",
+                    "formatter": (function(value, ctx) {{ return ctx.dataset.failureRateData[ctx.dataIndex]; }}),
+                    "font": {{
+                        "weight": "bold"
+                    }},
+                    "color": "#727273"
+                }}
+            }}
+        ]
+    }},
+    "options": {{
+        "scales": {{
+            "xAxes": [{{"stacked": true}}],
+            "yAxes": [{{"stacked": true}}]
+        }},
+        "plugins": {{
+            "datalabels": {{
+                "display": false
+            }}
+        }}
+    }}
+}}"""
+
+print("Shareable Chart URL:", qc.get_short_url())
