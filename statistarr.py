@@ -1,3 +1,7 @@
+# MIT License
+# Copyright (c) 2025 [Your Name or GitHub Handle]
+# See LICENSE file in the project root for full license text.
+
 import time
 start_time = time.time()
 
