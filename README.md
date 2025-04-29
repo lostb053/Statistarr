@@ -15,11 +15,11 @@ Requirements:
 * pip
 * Install requirements
 ```
-pip install requests quickchart.io
+pip install requests quickchart.io pyinstaller
 ```
 
 
-I am still figuring out exe file and how to schedule a py or exe file (I am a windows user). I will upload mainly the py files in question and let other users (if this repo even attracts attention) deal with how to schedule it. 
+I am still figuring out exe file and how to schedule a py or exe file (I am a windows user). I will upload mainly the py files in question and let other users (if this repo even attracts attention) deal with how to schedule it. A good way would be using pyinstaller and setting up scheduler/cron job.
 
 The py scripts (mostly built with windows in mind, open issue if any error) are as follows
 * statistarr.py - when run in console, prints a nice output in terminal. Main function being though json dump.
