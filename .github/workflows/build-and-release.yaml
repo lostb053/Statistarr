@@ -24,7 +24,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install pyinstaller
-        run: pip install pyinstaller
+        run: pip install pyinstaller psutil plyer apscheduler pystray requests
 
       - name: Convert input to array
         id: parse
@@ -41,13 +41,20 @@ jobs:
             pyinstaller $file --onefile --noconsole --distpath dist_exe
           }
 
-      - name: Create Release
+      - name: Create Release (manual)
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          files: dist_exe/*.exe
+
+      - name: Create Release (on tag push)
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          files: dist_exe/*.exe
+      
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         with:
