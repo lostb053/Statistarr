@@ -29,12 +29,13 @@ jobs:
           echo "${{ github.event.inputs.files }}" | tr ',' '\n' >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Build all EXEs
+      - name: Build all EXEs (PowerShell)
         run: |
-          mkdir -p dist_exe
-          for file in ${{ steps.parse.outputs.files }}; do
-            pyinstaller "$file" --onefile --noconsole --distpath dist_exe
-          done
+          $files = "${{ github.event.inputs.files }}".Split(",")
+          New-Item -ItemType Directory -Force -Path dist_exe | Out-Null
+          foreach ($file in $files) {
+            pyinstaller $file --onefile --noconsole --distpath dist_exe
+          }
 
       - name: Upload EXEs
         uses: actions/upload-artifact@v4
