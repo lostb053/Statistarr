@@ -10,7 +10,6 @@ on:
         description: 'Release tag to upload files to'
         required: true
 
-
 jobs:
   build:
     runs-on: windows-latest
@@ -60,7 +59,7 @@ jobs:
         with:
           files: dist_exe/*.exe
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   release:
     needs: build
@@ -79,4 +78,4 @@ jobs:
           tag_name: v${{ github.run_number }}
           files: dist/*.exe
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
