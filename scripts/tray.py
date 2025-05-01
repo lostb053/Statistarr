@@ -73,8 +73,8 @@ def create_tray_icon():
         MenuItem("Exit", exit_app)
     )
     icon.menu = tray_menu
-    icon.run()
-
+    icon.run_detached()
+    start_fetcher()  # Start fetcher when the tray icon is created
     while True:
         if update_fetcher_state():
             icon.update()  # Update tray icon if fetcher state has changed
