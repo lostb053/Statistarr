@@ -25,13 +25,6 @@ jobs:
       - name: Install pyinstaller
         run: pip install pyinstaller psutil plyer apscheduler pystray requests
 
-      - name: Convert input to array
-        id: parse
-        run: |
-          echo "files<<EOF" >> $GITHUB_OUTPUT
-          echo "${{ github.event.inputs.files }}" | tr ',' '\n' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
       - name: Build all EXEs (PowerShell)
         run: |
           $files = "scripts/tray.py,scripts/fetcher.py".Split(",")
@@ -42,40 +35,18 @@ jobs:
 
       - name: Create Release (manual)
         if: github.event_name == 'workflow_dispatch'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag }}
-          files: dist_exe/*.exe
-
-      - name: Create Release (on tag push)
-        if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: dist_exe/*.exe
-      
-      - name: Upload release assets
-        uses: softprops/action-gh-release@v1
-        with:
           files: dist_exe/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download EXEs
-        uses: actions/download-artifact@v4
-        with:
-          name: all-exe
-          path: dist
-
-      - name: Create GitHub Release
+      - name: Create Release (on tag push)
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          name: Release ${{ github.run_number }}
-          tag_name: v${{ github.run_number }}
-          files: dist/*.exe
+          tag_name: ${{ github.ref_name }}
+          files: dist_exe/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
