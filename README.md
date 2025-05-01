@@ -72,6 +72,7 @@ Statistarr/
 |- config.json
 |- fetcher.exe
 |- fetcher.py (optional, helpful for debugging code yourself)
+|- icon.ico
 |- statistarr.py
 |- tray.exe
 |- tray.py (optional, helpful for debugging code yourself)
