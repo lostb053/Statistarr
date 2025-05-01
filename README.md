@@ -36,37 +36,54 @@ It:
 
 ---
 
-### 🧰 Setup Methods
+### 🧰 Setup
 
-#### Method 1 – From Source
- Requirements
+
+**Requirements**
 - Python 3 (tested on `3.13.3`)
 - `pip`
 - Install dependencies:
 
 ```
-pip install requests quickchart.io pyinstaller
+pip install requests quickchart.io pyinstaller plyer pystray apscheduler
 ```
 
 > [!Tip]
 > Keep all script files in one separate directory for smoother execution.
 
 Moving ahead:
-1. Download all `.py` files.
-2. Download `config.json.example` and rename it to `config.json`.
+1. Download all the files from `script` folder.
+2. Rename `config.json.example` to `config.json`.
 3. Fill in your API details inside `config.json`.
-4. Build executables using `pyinstaller`:
+4. Build executables using `pyinstaller` or download pre-built executables (Windows only) from [Releases](https://github.com/lostb053/Statistarr/releases) page:
 
 ```bash
-pyinstaller --onefile cchart.py
-pyinstaller --onefile statistarr.py
-pyinstaller --onefile statistarr_silent.py
+pyinstaller --onefile --noconsole fetcher.py
+pyinstaller --onefile --noconsole tray.py
+```
+5. Get the executables from `dist` and place them back in parent folder. Clean up extra files from pyinstaller.
+6. Run `tray.exe` (or whatever executable you end up with)
+<br><br>
+
+**Expected directory structure:**
+```
+Statistarr/
+|- cchart.py
+|- config.json
+|- fetcher.exe
+|- fetcher.py (optional, helpful for debugging code yourself)
+|- statistarr.py
+|- tray.exe
+|- tray.py (optional, helpful for debugging code yourself)
+|- backup/ (created later by app)
+|- error.log (created later by app)
+|- Stats *.json (created later by app)
+|- untracked.log (created later by app)
+
 ```
 
-#### Method 2 – Executables (Windows Only)
-1. Download the pre-built `.exe` files from the [Releases](https://github.com/lostb053/Statistarr/releases) page.
-2. Download `config.json.example` and rename it to `config.json`.
-3. Fill in your API details.
+> [!Tip]
+> Add tray.exe to startup app.
 
 ---
 

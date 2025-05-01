@@ -1,7 +1,3 @@
-# MIT License
-# Copyright (c) 2025 LostB053
-# See LICENSE file in the project root for full license text.
-
 import os
 import json
 from quickchart import QuickChart
