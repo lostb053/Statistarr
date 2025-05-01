@@ -1,0 +1,62 @@
+name: Build EXEs and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Comma-separated list of .py files (e.g., main.py,helper.py)'
+        required: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install pyinstaller
+        run: pip install pyinstaller
+
+      - name: Convert input to array
+        id: parse
+        run: |
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "${{ github.event.inputs.files }}" | tr ',' '\n' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Build all EXEs
+        run: |
+          mkdir -p dist_exe
+          for file in ${{ steps.parse.outputs.files }}; do
+            pyinstaller "$file" --onefile --distpath dist_exe
+          done
+
+      - name: Upload EXEs
+        uses: actions/upload-artifact@v3
+        with:
+          name: all-exe
+          path: dist_exe/*.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download EXEs
+        uses: actions/download-artifact@v3
+        with:
+          name: all-exe
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.run_number }}
+          tag_name: v${{ github.run_number }}
+          files: dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
