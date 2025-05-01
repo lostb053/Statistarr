@@ -90,9 +90,10 @@ Statistarr/
 
 ## 🛠 Script Overview
 
-- `statistarr.py` – Prints readable output to the terminal. Also creates or updates the `JSON` stats dump.
-- `statistarr_silent.py` – Same functionality as above, but runs quietly in the background (when used as an app).
+- `statistarr.py` – Prints readable output to the terminal.
+- `fetcher.py` – Runs quietly in the background (when used as an app) to fetch history and create JSON dump.
 - `cchart.py` – Uses [QuickChart.io](https://quickchart.io/) to display your collected stats in a simple graph or chart.
+- `tray.py` – Creates tray icon.
 
 > [!Important]
 > PyInstaller executables may trigger false positives in antivirus tools or VirusTotal. This is a known issue and not unique to this project.
