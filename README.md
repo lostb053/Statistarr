@@ -45,7 +45,7 @@ It:
 - Install dependencies:
 
 ```
-pip install requests quickchart.io pyinstaller plyer pystray apscheduler
+pip install requests quickchart.io pyinstaller plyer pystray apscheduler psutil
 ```
 
 > [!Tip]

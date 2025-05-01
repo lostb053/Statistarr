@@ -12,21 +12,17 @@ from pystray import Icon, Menu, MenuItem
 
 # Function to start fetcher
 def start_fetcher():
-    global toggle
     global fetcher_process
     if fetcher_process is None or fetcher_process.poll() is not None:
         fetcher_process = subprocess.Popen('fetcher.exe')
-        toggle = True  # Set toggle to True when fetcher is started
 
 
 # Function to stop fetcher
 def stop_fetcher():
-    global toggle
     global fetcher_process
     if fetcher_process and fetcher_process.poll() is None:
         fetcher_process.terminate()
         fetcher_process = None
-        toggle = False # Set toggle to False when fetcher is stopped
 
 
 # Function to launch the stats viewer
@@ -40,7 +36,7 @@ def launch_chart():
 
 
 # Function to check if fetcher is running
-def is_fetcher_running(item):
+def is_fetcher_running(item = None):
     return fetcher_process is not None and fetcher_process.poll() is None
 
 
@@ -76,13 +72,19 @@ def create_tray_icon():
     icon.run_detached()
     start_fetcher()  # Start fetcher when the tray icon is created
     while True:
+        global toggle
         if update_fetcher_state():
-            icon.update()  # Update tray icon if fetcher state has changed
+            icon.update_menu()  # Update tray icon if fetcher state has changed
         time.sleep(1)  # Check every second (you can adjust the interval as needed)
+        if not icon.visible:
+            break  # Exit the loop if the icon is not visible
 
 
 # Function to exit the tray app
 def exit_app(icon, item):
+    if fetcher_process and fetcher_process.poll() is None:
+        fetcher_process.terminate()
+    icon.visible = False  # Hide the icon
     icon.stop()
 
 
