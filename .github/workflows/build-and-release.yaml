@@ -10,6 +10,9 @@ on:
         description: 'Release tag to upload files to'
         required: true
 
+permissions:
+  contents: write # This gives the workflow permission to create releases
+
 jobs:
   build:
     runs-on: windows-latest
