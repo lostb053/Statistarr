@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       files:
-        description: 'Comma-separated list of .py files (e.g., main.py,helper.py)'
+        description: 'scripts/tray.py, scripts/fetcher.py'
         required: true
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p dist_exe
           for file in ${{ steps.parse.outputs.files }}; do
-            pyinstaller "$file" --onefile --distpath dist_exe
+            pyinstaller "$file" --onefile --noconsole --distpath dist_exe
           done
 
       - name: Upload EXEs
