@@ -60,6 +60,7 @@ Moving ahead:
 2. Rename `config.json.example` to `config.json`.
 3. Fill in your API details inside `config.json`.
 4. Build executables using `pyinstaller` or download pre-built executables (Windows only) from [Releases](https://github.com/lostb053/Statistarr/releases) page:
+> Pre-built executables have been created in github actions.
 
 ```bash
 pyinstaller --onefile --noconsole fetcher.py
