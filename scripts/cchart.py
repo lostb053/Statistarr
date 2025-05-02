@@ -1,11 +1,21 @@
 import os
 import json
 from quickchart import QuickChart
+from plyer import notification
 
 qc = QuickChart()
 qc.width = 1000
 qc.height = 600
 qc.version = '2'
+
+
+def send_error_notification(error = "Chart error", message = "No JSON dump found. Run statistarr script first"):
+    notification.notify(
+        title=f'Statistarr: {error}',
+        message=message,
+        timeout=10  # seconds
+    )
+
 
 with open("config.json", "r") as config_file:
     config = json.load(config_file)
@@ -14,13 +24,16 @@ config_dict = config["Quickchart"]
 for key, value in config_dict.items():
     setattr(qc, key, value)
 
+
 # Your raw JSON data
 if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
     matches = [f for f in os.listdir() if (f.endswith(".json") and f.startswith("Stats "))]
     with open(matches[0], "r") as file:
         raw_data = json.load(file)
 else:
+    send_error_notification()
     raise Exception("No JSON dump found. Run statistarr script first")
+
 
 # 1. Combine totals per indexer
 totals = {}
@@ -32,12 +45,14 @@ for app, indexers in raw_data.items():
         totals[short_name]["success"] += stats.get("success", 0)
         totals[short_name]["fail"] += stats.get("fail", 0)
 
+
 # 2. Prepare labels and data arrays
 sorted_totals = sorted(totals.items(), key=lambda x: x[1]["success"], reverse=True)
 labels = []
 success_data = []
 fail_data = []
 failure_rates = []  # for datalabels plugin
+
 
 for indexer, stats in sorted_totals:
     labels.append(indexer)
@@ -49,6 +64,7 @@ for indexer, stats in sorted_totals:
     else:
         failure_rates.append("0.0%")
 failure_rates_json = json.dumps(failure_rates)
+
 
 # 3. Build chart config
 qc.config = f"""{{
@@ -94,6 +110,7 @@ qc.config = f"""{{
         }}
     }}
 }}"""
+
 
 print("Shareable Chart URL:", qc.get_short_url())
 

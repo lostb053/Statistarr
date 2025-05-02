@@ -5,6 +5,7 @@
 import sys
 import time
 import atexit
+import psutil
 import subprocess
 from PIL import Image
 from pystray import Icon, Menu, MenuItem
@@ -21,7 +22,12 @@ def start_fetcher():
 def stop_fetcher():
     global fetcher_process
     if fetcher_process and fetcher_process.poll() is None:
-        fetcher_process.terminate()
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            try:
+                if 'fetcher.exe' in proc.info['name'].lower():
+                    proc.terminate()
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
         fetcher_process = None
 
 
@@ -82,8 +88,7 @@ def create_tray_icon():
 
 # Function to exit the tray app
 def exit_app(icon, item):
-    if fetcher_process and fetcher_process.poll() is None:
-        fetcher_process.terminate()
+    stop_fetcher() # Stop fetcher when exiting
     icon.visible = False  # Hide the icon
     icon.stop()
 

@@ -4,14 +4,24 @@
 
 import os
 import json
+from plyer import notification
+
 
 # --- Functions ---
+def send_error_notification(error = "Viewer error", message = "No previous stats found"):
+    notification.notify(
+        title=f'Statistarr: {error}',
+        message=message,
+        timeout=10  # seconds
+    )
+
 
 if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
     matches = [f for f in os.listdir() if (f.endswith(".json") and f.startswith("Stats "))]
     with open(matches[0], "r") as file:
         all_app_stats: dict = json.load(file)
 else:
+    send_error_notification()
     raise Exception("No previous stats found.")
 
 
