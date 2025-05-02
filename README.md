@@ -62,6 +62,10 @@ pyinstaller --onefile --noconsole fetcher.py
 pyinstaller --onefile --noconsole tray.py
 ```
 5. Get the executables from `dist` and place them back in parent folder. Clean up extra files from pyinstaller.
+
+> [!Important]
+> PyInstaller executables may trigger false positives in antivirus tools or VirusTotal. This is a known issue and not unique to this project.
+
 6. Run `tray.exe` (or whatever executable you end up with)
 <br><br>
 
@@ -94,9 +98,6 @@ Statistarr/
 - `fetcher.py` – Runs quietly in the background (when used as an app) to fetch history and create JSON dump.
 - `cchart.py` – Uses [QuickChart.io](https://quickchart.io/) to display your collected stats in a simple graph or chart.
 - `tray.py` – Creates tray icon.
-
-> [!Important]
-> PyInstaller executables may trigger false positives in antivirus tools or VirusTotal. This is a known issue and not unique to this project.
 
 ---
 
