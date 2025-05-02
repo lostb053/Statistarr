@@ -32,7 +32,7 @@ if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
         raw_data = json.load(file)
 else:
     send_error_notification()
-    raise Exception("No JSON dump found. Run statistarr script first")
+    raise Exception("No JSON dump found. Run statistarr script first, or retry after a few minutes if the script is already running.")
 
 
 # 1. Combine totals per indexer

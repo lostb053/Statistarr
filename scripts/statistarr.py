@@ -22,7 +22,7 @@ if any((f.endswith(".json") and f.startswith("Stats ")) for f in os.listdir()):
         all_app_stats: dict = json.load(file)
 else:
     send_error_notification()
-    raise Exception("No previous stats found.")
+    raise Exception("No previous stats found. Run statistarr script first, or retry after a few minutes if the script is already running.")
 
 
 def merge_stats(all_stats: dict):
