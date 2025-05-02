@@ -129,7 +129,12 @@ _(Indexers have been blurred to protect the innocent 😭)_
 ## 🙏 Credits
 
 - **ChatGPT** – For assembling most of this script
-- **[@typpo](https://github.com/typpo)** – For the excellent [quickchart-python](https://github.com/typpo/quickchart-python) library
+- **[@typpo](https://github.com/typpo)** – For [quickchart-python](https://github.com/typpo/quickchart-python) library
+- **[@kivy](https://github.com/kivy)** – For [plyer](https://github.com/kivy/plyer) library
+- **[@moses-palmer](https://github.com/moses-palmer)** – For [pystray](https://github.com/moses-palmer/pystray) library
+- **[@agronholm](https://github.com/agronholm)** – For [apscheduler](https://github.com/agronholm/apscheduler) library
+- **[@giampaolo](https://github.com/giampaolo)** – For [psutil](https://github.com/giampaolo/psutil) library
+- **[@psf](https://github.com/psf)** – For [requests](https://github.com/psf/requests) library
 - Icon downloaded off [Freepik](https://www.freepik.com), made by [logisstudio1](https://www.freepik.com/author/logisstudio1/icons)
 
 ---
