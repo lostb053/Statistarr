@@ -1,5 +1,9 @@
 # Statistarr
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/db07eb3e-0a64-464e-a686-e3541412abed" width="300" title="Statistarr"/>
+</p>
+
 A simple Python script to track **failed** and **successful** grabs per indexer. Currently works with **Sonarr** and **Radarr** only.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
