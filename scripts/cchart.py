@@ -2,6 +2,7 @@ import os
 import json
 from quickchart import QuickChart
 from plyer import notification
+from math import floor
 
 qc = QuickChart()
 qc.width = 1000
@@ -22,7 +23,10 @@ with open("config.json", "r") as config_file:
 config_dict = config["Quickchart"]
 
 for key, value in config_dict.items():
-    setattr(qc, key, value)
+    if key != "redacted":
+        setattr(qc, key, value)
+    if key == "redacted":
+        redacted_ = value
 
 
 # Your raw JSON data
@@ -66,6 +70,11 @@ for indexer, stats in sorted_totals:
 failure_rates_json = json.dumps(failure_rates)
 
 
+lower_labels = [label.lower() for label in labels]
+for i in redacted_:
+    labels[lower_labels.index(i)] = "REDACTED"
+
+
 # 3. Build chart config
 qc.config = f"""{{
     "type": "bar",
@@ -75,7 +84,7 @@ qc.config = f"""{{
             {{
                 "label": "Success",
                 "data": {success_data},
-                "backgroundColor": "#baed6d",
+                "backgroundColor": "#03df94",
                 "datalabels": {{
                     "display": false
                 }}
@@ -100,8 +109,17 @@ qc.config = f"""{{
     }},
     "options": {{
         "scales": {{
-            "xAxes": [{{"stacked": true}}],
-            "yAxes": [{{"stacked": true}}]
+            "xAxes": [{{
+                "stacked": true,
+                "offset": true,
+            }}],
+            "yAxes": [{{
+                "stacked": true,
+                "ticks": {{
+                    "suggestedMin": 0,
+                    "suggestedMax": {floor(max([i+j for i, j in zip(success_data, fail_data)])/50)*50+50},
+                }},
+            }}]
         }},
         "plugins": {{
             "datalabels": {{
