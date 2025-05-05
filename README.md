@@ -7,6 +7,7 @@
 A simple Python script to track **failed** and **successful** grabs per indexer. Currently works with **Sonarr** and **Radarr** only.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Build EXEs and Release](https://github.com/lostb053/Statistarr/actions/workflows/build-and-release.yaml/badge.svg)](https://github.com/lostb053/Statistarr/actions/workflows/build-and-release.yaml)
 
 ---
 
