@@ -117,7 +117,7 @@ qc.config = f"""{{
                 "stacked": true,
                 "ticks": {{
                     "suggestedMin": 0,
-                    "suggestedMax": {floor(max([i+j for i, j in zip(success_data, fail_data)])/50)*50+50},
+                    "suggestedMax": {floor(max([i+j for i, j in zip(success_data, fail_data)])/50)*50+100},
                 }},
             }}]
         }},
