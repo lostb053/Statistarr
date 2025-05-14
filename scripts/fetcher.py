@@ -8,7 +8,6 @@ import time
 import json
 import shutil
 import requests
-from plyer import notification
 from datetime import datetime as dt
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -67,7 +66,9 @@ def fetch_all_logs(app, last_date: str = "") -> list:
         while True:
             r = requests.get(f"{app['url']}/api/v3/history?page={page}&pageSize=1000&eventType=4&eventType=1&sortKey=date&sortDirection=descending", headers={"X-Api-Key": app['api_key']})
             if r.status_code != 200:
-                send_error_notification("API Error", f"Error fetching logs from {app['name']}. Status code: {r.status_code}")
+                with open("connection_failure.log", "a") as file:
+                    file.write(f"=============================================\n"+
+                               f"{dt.now().strftime('%Y-%m-%d %H:%M:%S')} - {r.status_code} - {app['name']}\n\n")
                 break
             page_logs = r.json().get('records')
             if not page_logs or page_logs == []:
@@ -82,7 +83,6 @@ def fetch_all_logs(app, last_date: str = "") -> list:
             file.write(f"=============================================\n"+
                        f"{dt.now().strftime('%Y-%m-%d %H:%M:%S')} - {e}\n\n"+
                        f"{last_date}\n\n{app['name']}\n\n{all_logs}\n\n\n\n\n")
-        send_error_notification(f"{app['name']} error", f"Error fetching logs from {app['name']}. Check log file for details.")
 
 
 def parse_logs(app_name, logs, last_date: str = "", old_stats: dict = {}):
@@ -162,17 +162,7 @@ def fix_untracked(app, stats):
             failed_fixes += 1
             with open("untracked.log", "a") as file:
                 file.write(f"{dt.now().strftime('%Y-%m-%d %H:%M:%S')} - {app['name']} - {i}\n")
-    if failed_fixes > 0:
-        send_error_notification("Untracked downloads", f"{failed_fixes} untracked downloads could not be fixed. Check untracked.log for details.")
     untracked_download_id.clear()
-
-
-def send_error_notification(error = "Fetcher error", message = "Check log file for details."):
-    notification.notify(
-        title=f'Statistarr: {error}',
-        message=message,
-        timeout=10  # seconds
-    )
 
 
 # --- Main ---
@@ -195,7 +185,6 @@ def statistarr():
             file.write(f"=============================================\n"+
                        f"{dt.now().strftime('%Y-%m-%d %H:%M:%S')} - {e}\n\n"+
                        f"{last_date}\n\n{old_stats}\n\n{app_logs}\n\n\n\n\n")
-        send_error_notification()
 
 
 statistarr()

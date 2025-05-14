@@ -50,7 +50,7 @@ It:
 - Install dependencies:
 
 ```
-pip install requests quickchart.io pyinstaller plyer pystray apscheduler psutil
+pip install requests quickchart.io pyinstaller pystray apscheduler psutil
 ```
 
 > [!Tip]
@@ -131,7 +131,6 @@ _(Indexers have been blurred to protect the innocent 😭)_
 
 - **ChatGPT** – For assembling most of this script
 - **[@typpo](https://github.com/typpo)** – For [quickchart-python](https://github.com/typpo/quickchart-python) library
-- **[@kivy](https://github.com/kivy)** – For [plyer](https://github.com/kivy/plyer) library
 - **[@moses-palmer](https://github.com/moses-palmer)** – For [pystray](https://github.com/moses-palmer/pystray) library
 - **[@agronholm](https://github.com/agronholm)** – For [apscheduler](https://github.com/agronholm/apscheduler) library
 - **[@giampaolo](https://github.com/giampaolo)** – For [psutil](https://github.com/giampaolo/psutil) library
