@@ -26,7 +26,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install pyinstaller
-        run: pip install pyinstaller psutil plyer apscheduler pystray requests
+        run: pip install pyinstaller psutil apscheduler pystray requests
 
       - name: Build all EXEs (PowerShell)
         run: |
