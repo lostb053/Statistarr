@@ -60,6 +60,18 @@ Moving ahead:
 1. Download all the files from `script` folder.
 2. Rename `config.json.example` to `config.json`.
 3. Fill in your API details inside `config.json`.
+
+(Optional)
+To redact specific indexer names for public sharing, edit the json accordingly:
+```
+{
+    "Statistarr":  ...,
+    "Quickchart": {
+        "redacted": ["Indexer_name", ...]
+    }
+}
+```
+
 4. Build executables using `pyinstaller` or download pre-built executables (Windows only) from [Releases](https://github.com/lostb053/Statistarr/releases) page:
 > Pre-built executables have been created in github actions.
 
